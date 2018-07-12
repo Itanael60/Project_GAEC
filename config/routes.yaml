@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+inscription:
+   path: /inscription
+   controller: App\Controller\UserController::inscription
