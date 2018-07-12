@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class UserType extends AbstractType
 {
@@ -26,7 +27,7 @@ class UserType extends AbstractType
         ->add('telephone', TelType::class)
         ->add('email', EmailType::class)
         ->add('password', PasswordType::class)
-        ->add('newsletter', TextType::class)
+        ->add('newsletter', CheckboxType::class, array('label' => "Je souhaites recevoir la Newsletter"))
         ->add('Enregistrer', SubmitType::class, array('label' => "Je m'inscris"))
         ;
     }
