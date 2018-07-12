@@ -1,27 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello !{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 1em auto; max-width: 1280px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+<header class="align-items-center row">
+        <h1 class="col-sm-7">Il était une fois "La ferme de la vieille rue"</h1>
+        <nav class="col-sm-5">
+            <ul>
+                <li><a id="home" href="">Home</a></li>
+                <li><a id="inscription" data-toggle="modal" data-target="#user_modal" href="">Inscription</a></li>
+            </ul>
+        </nav>
+
+</header>
+
+
 <div class="example-wrapper">
 
-    {# <div class="modal fade" id="update_user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> #}
+    <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     {{ form_start(form) }}
 
-    {# <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modifier Personne</h4>
-            </div>
-            <div class="modal-body"> #}
-            
+
+            <div class="modal-body">            
                 
                 <div class="form-group row ">
                     <label for="nom" class="col-lg-2">Nom</label>
@@ -61,16 +69,26 @@
                     {{ form_widget(form.password, {attr: {class: 'col-lg-10'}}) }}
                 </div>
 
+                <div class="form-group row">
+                    
+                    {{ form_widget(form.newsletter, {attr: {class: 'col-lg-10'}}) }}
+                </div>
+
+                <div class="form-group row">
+                    
+                    {{ form_widget(form.enregistrer, {attr: {class: 'col-lg-10'}}) }}
+                </div>
+
                
 
-            {# </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                 <input type="hidden" id="hidden_user_id">
-            </div> #}
-        {# </div>
+            </div> 
+        </div>
     </div>
-</div> #}
+</div>
     {{ form_end(form) }}
 </div>
 {% endblock %}

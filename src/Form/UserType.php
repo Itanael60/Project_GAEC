@@ -28,7 +28,7 @@ class UserType extends AbstractType
         ->add('email', EmailType::class)
         ->add('password', PasswordType::class)
         ->add('newsletter', CheckboxType::class, array('label' => "Je souhaites recevoir la Newsletter"))
-        ->add('Enregistrer', SubmitType::class, array('label' => "Je m'inscris"))
+        ->add('enregistrer', SubmitType::class, array('label' => "Je m'inscris"))
         ;
     }
 
