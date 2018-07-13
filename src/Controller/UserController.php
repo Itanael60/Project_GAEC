@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 class UserController extends Controller
 {
     /**
@@ -23,14 +25,21 @@ class UserController extends Controller
     }
 
 
-    public function inscription(Request $request): Response
+    public function inscription(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $encoded = $encoder->encodePassword($user, $form["password"]->getData());
+
+            $user->setPassword($encoded);
+            
             $em->persist($user);
             $em->flush();
 
