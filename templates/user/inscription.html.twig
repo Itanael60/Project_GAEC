@@ -24,71 +24,83 @@
 
     <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
 
-            <div class="modal-body">            
+                <div class="modal-body">            
+                    
+                    <div class="form-group row ">
+                        <label for="nom" class="col-lg-2">Nom</label>
+                            {{ form_widget(form.nom, {attr: {class: 'col-lg-4'}}) }}
+                        <label for="prenom" class="col-lg-2">Prénom</label>
+                            {{ form_widget(form.prenom, {attr: {class: 'col-lg-4'}}) }}
+                    </div>
+
+                    <div class="form-group  row">
+                        <label for="email" class="col-lg-2">Email</label>
+                        {{ form_widget(form.email, {attr: {class: 'col-lg-4'}}) }}
+                        <label for="telephone" class="col-lg-2">Téléphone</label>
+                        {{ form_widget(form.telephone, {attr: {class: 'col-lg-4'}}) }}
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="adresse" class="col-lg-2">Adresse</label>
+                        {{ form_widget(form.adresse, {attr: {class: 'col-lg-10'}}) }}
+                    </div>
+
+                    <div class="form-group row ">
+                        <label for="cp" class="col-lg-2">Code Postal</label>
+                            {{ form_widget(form.cp, {attr: {class: 'col-lg-4'}}) }}
+                        <label for="ville" class="col-lg-2">Ville</label>
+                            {{ form_widget(form.ville, {attr: {class: 'col-lg-4'}}) }}
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="password" class="col-lg-2">Mot de passe</label>
+                        {{ form_widget(form.password, {attr: {class: 'col-lg-4'}}) }}
+                        <label for="confirmPassword" class="col-lg-2">Confirmation</label>
+                        <input type="password" class="form-control col-lg-4">
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        {{ form_widget(form.password, {attr: {class: 'col-lg-10'}}) }}
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        {{ form_widget(form.newsletter, {attr: {class: 'col-lg-10'}}) }}
+                    </div>
+
+                    <div class="form-group row">
+                        
+                        {{ form_widget(form.enregistrer, {attr: {class: 'col-lg-10'}}) }}
+                    </div>
+
                 
-                <div class="form-group row ">
-                    <label for="nom" class="col-lg-2">Nom</label>
-                        {{ form_widget(form.nom, {attr: {class: 'col-lg-4'}}) }}
-                    <label for="prenom" class="col-lg-2">Prénom</label>
-                        {{ form_widget(form.prenom, {attr: {class: 'col-lg-4'}}) }}
+
                 </div>
-
-                <div class="form-group  row">
-                    <label for="email" class="col-lg-2">Email</label>
-                    {{ form_widget(form.email, {attr: {class: 'col-lg-4'}}) }}
-                    <label for="telephone" class="col-lg-2">Téléphone</label>
-                    {{ form_widget(form.telephone, {attr: {class: 'col-lg-4'}}) }}
-                </div>
-
-                <div class="form-group row">
-                    <label for="adresse" class="col-lg-2">Adresse</label>
-                    {{ form_widget(form.adresse, {attr: {class: 'col-lg-10'}}) }}
-                </div>
-
-                <div class="form-group row ">
-                    <label for="cp" class="col-lg-2">Code Postal</label>
-                        {{ form_widget(form.cp, {attr: {class: 'col-lg-4'}}) }}
-                    <label for="ville" class="col-lg-2">Ville</label>
-                        {{ form_widget(form.ville, {attr: {class: 'col-lg-4'}}) }}
-                </div>
-
-                <div class="form-group row">
-                    <label for="password" class="col-lg-2">Mot de passe</label>
-                    {{ form_widget(form.password, {attr: {class: 'col-lg-4'}}) }}
-                    <label for="confirmPassword" class="col-lg-2">Confirmation</label>
-                    <input type="password" class="form-control col-lg-4">
-                </div>
-
-                <div class="form-group row">
-                    
-                    {{ form_widget(form.password, {attr: {class: 'col-lg-10'}}) }}
-                </div>
-
-                <div class="form-group row">
-                    
-                    {{ form_widget(form.newsletter, {attr: {class: 'col-lg-10'}}) }}
-                </div>
-
-                <div class="form-group row">
-                    
-                    {{ form_widget(form.enregistrer, {attr: {class: 'col-lg-10'}}) }}
-                </div>
-
-               
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <input type="hidden" id="hidden_user_id">
+                </div> 
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <input type="hidden" id="hidden_user_id">
-            </div> 
         </div>
     </div>
-</div>
     {{ form_end(form) }}
+
+    
 </div>
+
+{# commentaire #}
+<div id="fb-root"></div>
+<div class="fb-comments" data-href="https://www.facebook.com/producteurlaitier.GAECDELAVIEILLERUE60/" data-numposts="5"></div>
+
+{# avis #}
+<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fdydydu6%2Fposts%2F2140963815930559%3A0&width=500&show_text=true&height=423&appId" width="500" height="423" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+
+{# actu #}
+<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fproducteurlaitier.GAECDELAVIEILLERUE60%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
 {% endblock %}
