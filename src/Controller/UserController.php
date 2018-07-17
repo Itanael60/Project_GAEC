@@ -28,7 +28,7 @@ class UserController extends Controller
     public function inscription(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,['validation_groups' => array('User', 'registration')]);
         $form->handleRequest($request);
 
         

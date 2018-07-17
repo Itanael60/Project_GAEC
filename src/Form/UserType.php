@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class UserType extends AbstractType
 {
@@ -28,14 +29,26 @@ class UserType extends AbstractType
         ->add('ville', TextType::class)
         ->add('telephone', TelType::class)
         ->add('email', EmailType::class)
-        ->add('newsletter', CheckboxType::class, array('label' => "Je souhaites recevoir la Newsletter"))
-        ->add('enregistrer', SubmitType::class, array('label' => "Je m'inscris"))
-        ->add('password', RepeatedType::class, array(
-            'type' => PasswordType::class,
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repeat Password'),
-        ))
-    ;
+        ->add('newsletter', CheckboxType::class, array('label'=>'Je souhaites recevoir la newsletter','required' => false))
+        ->add('enregistrer', SubmitType::class, array('label' => "Je m'inscris"));
+        if (in_array('registration', $options['validation_groups'])) {
+            $builder
+                ->add('password', RepeatedType::class, array(
+                    'type' => PasswordType::class,
+                    'first_options'  => array('label' => 'Mot de passe'),
+                    'second_options' => array('label' => 'Confirmer le mot de passe'),
+                ))
+                ;
+        } else {
+            $builder
+                ->add('password', RepeatedType::class, array(
+                    'required' => false,
+                    'type' => PasswordType::class,
+                    'first_options'  => array('label' => 'Mot de passe'),
+                    'second_options' => array('label' => 'Confirmer le mot de passe'),
+                ))
+                ;
+                }
     }
 
     public function configureOptions(OptionsResolver $resolver)
