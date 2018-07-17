@@ -40,6 +40,9 @@ class UserController extends Controller
 
             $user->setPassword($encoded);
             
+            // Par defaut l'utilisateur aura toujours le rôle ROLE_USER
+            $user->setRoles(['ROLE_USER']);
+
             $em->persist($user);
             $em->flush();
 

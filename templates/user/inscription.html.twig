@@ -32,6 +32,12 @@
                 <div class="modal-body">            
                     
                     <div class="form-group row ">
+                        <label for="username" class="col-lg-2">Pseudo</label>
+                            {{ form_widget(form.username, {attr: {class: 'col-lg-10'}}) }}
+                        
+                    </div>
+
+                    <div class="form-group row ">
                         <label for="nom" class="col-lg-2">Nom</label>
                             {{ form_widget(form.nom, {attr: {class: 'col-lg-4'}}) }}
                         <label for="prenom" class="col-lg-2">Prénom</label>
@@ -59,9 +65,9 @@
 
                     <div class="form-group row">
                         <label for="password" class="col-lg-2">Mot de passe</label>
-                        {{ form_widget(form.password, {attr: {class: 'col-lg-4'}}) }}
+                        {{ form_widget(form.password.first, {attr: {class: 'col-lg-4'}}) }}    
                         <label for="confirmPassword" class="col-lg-2">Confirmation</label>
-                        <input type="password" class="form-control col-lg-4">
+                        {{ form_widget(form.password.second, {attr: {class: 'col-lg-4'}}) }}
                     </div>
 
                     <div class="form-group row">

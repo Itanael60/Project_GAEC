@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -19,6 +20,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+        ->add('username', TextType::class)
         ->add('nom', TextType::class)
         ->add('prenom', TextType::class)
         ->add('adresse', TextType::class)
@@ -26,10 +28,14 @@ class UserType extends AbstractType
         ->add('ville', TextType::class)
         ->add('telephone', TelType::class)
         ->add('email', EmailType::class)
-        ->add('password', PasswordType::class)
         ->add('newsletter', CheckboxType::class, array('label' => "Je souhaites recevoir la Newsletter"))
         ->add('enregistrer', SubmitType::class, array('label' => "Je m'inscris"))
-        ;
+        ->add('password', RepeatedType::class, array(
+            'type' => PasswordType::class,
+            'first_options'  => array('label' => 'Password'),
+            'second_options' => array('label' => 'Repeat Password'),
+        ))
+    ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

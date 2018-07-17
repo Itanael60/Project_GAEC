@@ -68,6 +68,11 @@ class User implements UserInterface, \Serializable
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $username;
+
     public function getId()
     {
         return $this->id;
@@ -86,9 +91,9 @@ class User implements UserInterface, \Serializable
     }
 
     // nécessaire pour la sécurité du mdp
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
-        return $this->nom;
+        return $this->username;
     }
 
     public function getPrenom(): ?string
@@ -187,16 +192,24 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getRoles(): ?array
+    /**
+     * Retourne les rôles de l'user
+     */
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+ 
+        // Afin d'être sûr qu'un user a toujours au moins 1 rôle
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+ 
+        return array_unique($roles);
     }
-
-    public function setRoles(array $roles): self
+ 
+    public function setRoles(array $roles): void
     {
         $this->roles = $roles;
-
-        return $this;
     }
 
 
@@ -242,5 +255,12 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized): void
     {
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 }
