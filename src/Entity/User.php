@@ -5,10 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  
 /**
- * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user")
+ * @UniqueEntity(fields="email", message="Email déjà pris")
+ * @UniqueEntity(fields="username", message="Username déjà pris")
   */
 class User implements UserInterface, \Serializable
 {
@@ -79,6 +82,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=25)
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $cgu;
 
     public function getId()
     {
@@ -267,6 +275,18 @@ class User implements UserInterface, \Serializable
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getCgu(): ?bool
+    {
+        return $this->cgu;
+    }
+
+    public function setCgu(bool $cgu): self
+    {
+        $this->cgu = $cgu;
 
         return $this;
     }

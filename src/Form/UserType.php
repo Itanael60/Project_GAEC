@@ -30,6 +30,7 @@ class UserType extends AbstractType
         ->add('telephone', TelType::class)
         ->add('email', EmailType::class)
         ->add('newsletter', CheckboxType::class, array('label'=>'Je souhaites recevoir la newsletter','required' => false))
+        ->add('cgu', CheckboxType::class, array('label'=>"J'accepte les conditions de la CGU"))
         ->add('enregistrer', SubmitType::class, array('label' => "Je m'inscris"));
         if (in_array('registration', $options['validation_groups'])) {
             $builder

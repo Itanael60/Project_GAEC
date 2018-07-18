@@ -1,21 +1,33 @@
+html {
+    background-image: "../img/background.png";
+    height: 100vh;
+}
+
 body {
-    background-color: #373c49;
-    color: white;
+    color: #a86222;
     font-size: 16px;
     min-height: 100%;
 }
 
 header {
-    border-bottom: 1px solid hotpink;
+    border-bottom: 1px solid #a86222;
     display: inline-flex;
-    height: 5vh;
     width: 100vw;
 }
 
+footer {
+    border: 1px solid #a86222;
+    background-color: white;
+    display: inline-flex;
+    position: relative;
+    top: 36em;
+    z-index: 2;
+}
+
 h1 {
-    font-size: 15px;
+    font-size: 18px;
     margin: 0;
-    padding-left: 40px !important;
+    padding-left: 15px !important;
 }
 
 nav {
@@ -40,16 +52,60 @@ li {
 }
 
 a {
-    color: white;
-    font-size: 13px;
+    color: #a86222;
+    font-size: 18px;
     text-decoration: none;
 }
 
 a:hover {
     color: inherit;
     text-decoration: none;
+    color: #a86222c4;
 }
 
 .row {
     margin: 0;
+}
+
+#user_newsletter {
+    width: 8%;
+}
+
+#user_cgu {
+    width: 9%;
+}
+
+.checkbox-padding {
+    padding-left: 0.7em;
+}
+
+.form-group {
+    padding-bottom: 1em;
+}
+
+.contact {
+    font-size: 12px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+#label {
+    padding-left: 1em;
+}
+
+.cellspading {
+    padding: 1em;
+}
+
+.background-herbe {
+    position: relative;
+    top: 7em;
+    z-index: 1;
+}
+
+.contact2 {
+    font-size: 14px;
+    font-weight: bold;
 }

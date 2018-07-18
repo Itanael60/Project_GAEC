@@ -1,10 +1,10 @@
-#index:
+# index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
 
 inscription:
-  path: /inscription
+  path: /
   controller: App\Controller\UserController::inscription
 
 connexion:
@@ -13,3 +13,7 @@ connexion:
 
 logout:
   path: /deconnexion
+
+creationProduit:
+  path: /admin_produit
+  controller: App\Controller\ProduitController:creationProduit  
