@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 html {
     background-image: "../img/background.png";
-    height: 100vh;
 }
 
 body {
     color: #a86222;
     font-size: 16px;
-    min-height: 100%;
+    font-family: 'Raleway', sans-serif;
+    background: url(../css/images/background.png) no-repeat bottom;
+    background-size: 100%;
 }
 
 header {
@@ -20,11 +22,10 @@ footer {
     background-color: white;
     display: inline-flex;
     position: relative;
-    top: 36em;
     z-index: 2;
 }
 
-h1 {
+­­­­­ h1 {
     font-size: 18px;
     margin: 0;
     padding-left: 15px !important;
@@ -72,7 +73,7 @@ a:hover {
 }
 
 #user_cgu {
-    width: 9%;
+    width: 8%;
 }
 
 .checkbox-padding {
@@ -81,6 +82,7 @@ a:hover {
 
 .form-group {
     padding-bottom: 1em;
+    margin-bottom: 0;
 }
 
 .contact {
@@ -101,11 +103,47 @@ h4 {
 
 .background-herbe {
     position: relative;
-    top: 7em;
     z-index: 1;
 }
 
 .contact2 {
     font-size: 14px;
     font-weight: bold;
+}
+
+.modal {
+    font-size: 15px;
+}
+
+#ajout_produit_titre {
+    right: 4.2em;
+    position: relative;
+}
+
+.connexion_champs {
+    width: 25% !important;
+}
+
+.centrer {
+    text-align: center;
+}
+
+.titre {
+    padding: 1em 0;
+}
+
+.padding {
+    padding: 1em 0;
+}
+
+.padding2 {
+    padding: 2em 0;
+}
+
+.padding2_2 {
+    padding: 2.2em 0;
+}
+
+.padding3 {
+    padding: 3em 0;
 }

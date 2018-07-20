@@ -1,33 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Se connecter{% endblock %}
-
 {% block body %}
-<div class="container">
-    <br>    
-
-    <form action="{{ path('connexion') }}" method="post">
-        <div>
-            <label for="username">Pseudo:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        </div>
-        <div>
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="_password" />
-        </div>
-
-        <br>
-        {% if error %}
-            <div style="color: red;">
-                Le pseudo ou le mot de passe est incorrect
+    <div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">       
+                <form action="{{ path('connexion') }}" method="post">
+                    <div class="form-group">
+                        <label for="username">Pseudo:</label>
+                        <input class="form-control connexion_champs" type="text" id="username" name="_username" value="{{ last_username }}" />
+                    </div>
+                    <div>
+                        <label for="password">Mot de passe:</label>
+                        <input class="form-control connexion_champs" type="password" id="password" name="_password" />
+                    </div>
+                    <br>
+                    {% if error %}
+                        <div style="color: red;">
+                            Le pseudo ou le mot de passe est incorrect
+                        </div>
+                        <br>
+                    {% endif %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <button type="submit" class="btn btn-success">Se connecter</button>  
+                </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+                        <input type="hidden" id="hidden_user_id">
+                    </div> 
+                </div>
             </div>
-            <br>
-        {% endif %}
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}">
-        <button type="submit" class="btn btn-success">Se connecter</button>  
+        </div>
+    </div>
+    <br>
 
-    </form>
-</div>
-<br>
 {% endblock %}

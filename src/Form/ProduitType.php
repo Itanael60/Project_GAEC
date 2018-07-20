@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -25,9 +24,9 @@ class ProduitType extends AbstractType
         ->add('detail', TextType::class)
         ->add('quantite', IntegerType::class)
         ->add('categorie', TextType::class)
-        ->add('prixHT', MoneyType::class);
-        // ->add('imageFile', VichImageType::class);
-               
+        ->add('prixHT', MoneyType::class)
+        ->add('image', FileType::class, array('data_class' => null,'required' => false));
+                   
     }
 
     public function configureOptions(OptionsResolver $resolver)

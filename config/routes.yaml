@@ -3,8 +3,15 @@
 #    controller: App\Controller\DefaultController::index
 
 
-inscription:
+
+accueil:
   path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: static/accueil.html.twig
+
+inscription:
+  path: /inscription
   controller: App\Controller\UserController::inscription
 
 connexion:
@@ -14,6 +21,44 @@ connexion:
 logout:
   path: /deconnexion
 
+cgu:
+  path: /cgu
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: static/cgu.html.twig
+
 creationProduit:
   path: /admin_produit
-  controller: App\Controller\ProduitController:creationProduit  
+  controller: App\Controller\ProduitController:creationProduit
+  
+produit:
+  path: /produit/{id}
+  controller: App\Controller\ProduitController:showProduit
+
+produits:
+  path: /produits/
+  controller: App\Controller\ProduitController:showAllProduits
+
+produitsListe:
+  path: /admin_produitsListe/
+  controller: App\Controller\ProduitController:produitsListe
+
+modifProduit:
+  path: /admin_modifProduit/{id}
+  controller: App\Controller\ProduitController:modifProduit
+
+panier:
+  path: /panier
+  controller: App\Controller\PanierController:panier
+
+ajouter:
+  path: /ajouter/{id}
+  controller: App\Controller\PanierController:ajouter
+  
+supprimer:
+  path: /supprimer/{id}
+  controller: App\Controller\PanierController:supprimer
+
+
+
+  
