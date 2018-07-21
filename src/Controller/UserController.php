@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Events;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class UserController extends Controller
 {
@@ -46,7 +51,25 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('inscription');
+            
+            $subject = "Confirmation d'inscription";
+            $body = "Bienvenue {{ user.username }},<br>
+            vous venez de vous inscrire sur le site de WeshMaGueule.toto et je vous en remercie.<br>
+            Si vous avez souscrit à la newsletter, vous serez désormais informés personnellement des meilleures offres Tartonpion ainsi que des bonnes affaires du moment.<br>
+            Merci de votre confiance et à bientôt sur WeshMaGueule.toto »";
+            $message = (new \Swift_Message())
+                ->setSubject($subject)
+                ->setTo($user->getEmail())
+                ->setFrom('vn.emploi@laposte.net')
+                ->setBody($body, 'text/html')
+            ;
+            $this->get('mailer')->send($message);
+
+            //On déclenche l'event
+            // $event = new GenericEvent($user);
+            // $eventDispatcher->dispatch(Events::USER_REGISTERED, $event);
+
+            return $this->redirectToRoute('connexion');
         }
 
         return $this->render('user/inscription.html.twig', [
@@ -56,4 +79,5 @@ class UserController extends Controller
     }
 
    
+    
 }

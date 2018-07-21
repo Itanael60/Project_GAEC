@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Form\RechercheType;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -161,12 +162,78 @@ class ProduitController extends Controller
  
      public function ajouter($id)
      {
-     return $this->redirect($this->generateUrl('panier'));
+        return $this->redirect($this->generateUrl('panier'));
      }
  
      public function supprimer($id)
      {
-     return $this->redirect($this->generateUrl('ajouter'));
+        return $this->redirect($this->generateUrl('ajouter'));
      }
+
+    // public function recherche():Response
+    // {
+    //     $form = $this->createForm(RechercheType::class);
+    //     return $this->render('produit/recherche.html.twig', [
+    //         'produit' => $produit,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
+
+
+    // public function rechercheTraitement(Request $request)
+    // // public function rechercheTraitement();
+    // {
+    //     $form = $this->createForm(RechercheType::class);        
+    //     $form->handleRequest($request);
+    //     $entityManager = $this->getDoctrine()->getRepository(Produit::class);
+    //     $produits = $entityManager->findBy($produit);
+
+    //     return $this->render('produit/recherche.html.twig', [
+    //                 'produit' => $produit,
+    //                 'form' => $form->createView(),
+    //             ]);
+
+    
+    // // $entityManager = $this->getDoctrine()->getManager();
+    // // $produit= $entityManager->getRepository(Produit::class)->find($id);
+
+    // // if(!$produit)
+    // // {
+    // //     throw $this->createNotFoundException('Aucun produit ne correspond');
+    // // }
+
+          
+
+    // // return $this->render ('produit/produit.html.twig', ['produit'=>$produit]);
+
+    
+    // }
+
+    public function recherche()
+    {
+        $form = $this->createForm(RechercheType::class);
+       
+        return $this->render('produit/recherche.html.twig', [
+            'form' => $form->createview()
+        ]);
+    }
+
+
+    public function rechercheTraitement()
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $produits = $entityManager->getRepository(Produit::class)->findOneBy(['produit'=>'Haricot']);
+
+        return $this->render('produit/recherche.html.twig', [
+            'produits'=>$produits,
+        ]);
+        
+       
+        // $form = $this->createForm(RechercheType::class);
+       
+        // return $this->render('produit/recherche.html.twig', [
+        //     'form' => $form->createview()
+        // ]);
+    }
 
 }
