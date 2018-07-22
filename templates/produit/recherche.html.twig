@@ -6,19 +6,32 @@
 
 
 <div class="container">
-   
+
+    
     <div class="card-deck">
-    {% for produit in produits %}
+    {% if produits|length > 1 %}
+        {% for produit in produits %}
+            <div class="card mt-4">
+                <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produit.image}}" alt="{{produit.produit}}" height="503px" width="200px">
+                <div class="card-body">
+                    <a href="{{path('produit', {'id':produit.id})}}"> <h3 class="card-title">{{ produit.produit }}</h3></a><h4>{% set prix = produit.prixHT * 1.19 %}</h4>
+                    <p class="card-text"> {{ produit.detail }}</p>
+                        
+                    <a href="{{path('ajouter', {'id':produit.id})}}" class="btn btn-warning">Mettre au panier</a>            
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
         <div class="card mt-4">
-            <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produit.image}}" alt="{{produit.produit}}" height="503px" width="200px">
-            <div class="card-body">
-       <a href="{{path('recherche', {'id':produit.id})}}"> <h3 class="card-title">{{ produit.produit }}</h3></a><h4>{% set prix = produit.prixHT * 1.19 %}</h4>
-            <p class="card-text"> {{ produit.detail }}</p>
-            
-        <a href="{{path('ajouter', {'id':produit.id})}}" class="btn btn-warning">Mettre au panier</a>            
-        </div>
-    </div>
-    {% endfor %}
+                <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produits.image}}" alt="{{produits.produit}}" height="503px" width="200px">
+                <div class="card-body">
+                    <a href="{{path('produit', {'id':produits.id})}}"> <h3 class="card-title">{{ produits.produit }}</h3></a><h4>{% set prix = produits.prixHT * 1.19 %}</h4>
+                    <p class="card-text"> {{ produits.detail }}</p>
+                        
+                    <a href="{{path('ajouter', {'id':produits.id})}}" class="btn btn-warning">Mettre au panier</a>            
+                </div>
+            </div>
+    {% endif %}
     </div>
 
     

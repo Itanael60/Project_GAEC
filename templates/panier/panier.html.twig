@@ -2,6 +2,10 @@
 
 {% block title %}Hello !{% endblock %}
 
+
+
+
+
 {% block body %}
 
 <div class="container">
@@ -16,34 +20,38 @@
             </tr>
         </thead>
         <tbody>
-        {# {% for produit in produits %} #}
+        {% for produit in produits %}
             <tr>
                 <td data-th="Produit">
                     <div class="row">
                         <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
                         <div class="col-sm-10">
-                            <h4 class="nomargin">Product 1</h4>
-                            <p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+                            <h4 class="nomargin">{{produit.produit}}</h4>
+                            <p>{{produit.detail}}</p>
                         </div>
                     </div>
                 </td>
-                <td data-th="Prix">1.99 €</td>
+                <td data-th="Prix"> {{produit.prixHT}} €</td>
                 <td data-th="Quantite">
-                    <input type="number" class="form-control text-center" value="1">
+                    <input type="number" class="form-control text-center" value="{{produit.qte}}">
                 </td>
-                <td data-th="Sous-total" class="text-center">1.99</td>
+                <td data-th="Sous-total" class="text-center">{% set sousTotal = 0 %}{% set sousTotal = produit.prixHT * produit.qte %} {{sousTotal}}</td>
                 <td class="actions" data-th="">
-                    <button class="btn btn-info btn-sm"><i class="fas fa-sync-alt"></i></button>
-                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>								
+                    <a href="{{path('panier')}}"><button class="btn btn-info btn-sm"><i class="fas fa-sync-alt"></i></button></a>
+                    <a href="{{path('supprimer', {'id':produit.id})}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>						
                 </td>
             </tr>
+            {% endfor %}
         </tbody>
         <tfoot>
-            
+            {% set prixTotal = 0 %} 
+                {% for produit in produits %}
+                {% set prixTotal = (produit.prixHT * produit.qte) + prixTotal %}
+            {% endfor %}
             <tr>
-                <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuer les achats</a></td>
+                <td><a href="{{path('produits')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuer les achats</a></td>
                 <td colspan="2" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total 1.99€</strong></td>
+                <td class="hidden-xs text-center"><strong> Total  {{prixTotal}} €</strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Valider <i class="fa fa-angle-right"></i></a></td>
             </tr>
         </tfoot>

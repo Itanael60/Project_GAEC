@@ -139,8 +139,7 @@ class ProduitController extends Controller
 
             }
             else {
-                // $img= $produit->getImage();
-                // $produit->setImage($img);
+                
                 $produit->setImage('6bca0f32d445f16e2a3e7730035a1e12.jpeg');
             }
             
@@ -209,31 +208,41 @@ class ProduitController extends Controller
     
     // }
 
-    public function recherche()
+    public function recherche(Request $request)
     {
         $form = $this->createForm(RechercheType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            $produit=$request->query->get('recherche');
+            var_dump($produit);
+            die();
+            return $this->render('produit/recherche.html.twig', ['produit'=>$produit]);
+        }
+        return $this->render('produit/form_recherche.html.twig',[
+            'form' => $form->createview()]);
        
-        return $this->render('produit/recherche.html.twig', [
-            'form' => $form->createview()
-        ]);
     }
 
 
-    public function rechercheTraitement()
-    {
-        $entityManager=$this->getDoctrine()->getManager();
-        $produits = $entityManager->getRepository(Produit::class)->findOneBy(['produit'=>'Haricot']);
+    public function rechercheTraitement(Produit $produit)
+    {   
+        var_dump($produit);
+        die();
+        // $form = $this->createForm(RechercheType::class);
 
-        return $this->render('produit/recherche.html.twig', [
-            'produits'=>$produits,
-        ]);
+        $entityManager=$this->getDoctrine()->getManager();
+        
+        $produits = $entityManager->getRepository(Produit::class)->findBy(['produit'=>$produit]);
+        
+
+        // echo $produits->getProduit();
+        // die();
+
+        return $this->render('produit/recherche.html.twig', ['produits'=>$produits]);
         
        
-        // $form = $this->createForm(RechercheType::class);
        
-        // return $this->render('produit/recherche.html.twig', [
-        //     'form' => $form->createview()
-        // ]);
     }
 
 }

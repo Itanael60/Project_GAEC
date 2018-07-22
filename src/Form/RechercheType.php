@@ -16,7 +16,9 @@ class RechercheType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $option)
     {
         $builder
-        ->add('recherche', TextType::class)
+        ->add('recherche', TextType::class,['attr' => [
+            'name' => 'recherche'
+        ]])
         ->add('rechercher', SubmitType::class, ['attr' => [
             'class' => 'btn btn-primary'
         ]]);
@@ -28,9 +30,4 @@ class RechercheType extends AbstractType
             'data_class' => Produit::class,
         ]);
     }
-
-    // public function getName()
-    // {
-    //     return $this->redirectToRoute('recherche');
-    // }
 }

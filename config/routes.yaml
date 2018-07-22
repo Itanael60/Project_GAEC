@@ -59,6 +59,10 @@ supprimer:
   path: /supprimer/{id}
   controller: App\Controller\PanierController:supprimer
 
+formRecherche:
+  path: /formRecherche
+  controller : App\Controller\ProduitController:recherche
+
 recherche:
   path: /recherche
   controller : App\Controller\ProduitController:rechercheTraitement

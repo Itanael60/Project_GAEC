@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -23,10 +24,13 @@ class ProduitType extends AbstractType
         ->add('produit', TextType::class)
         ->add('detail', TextType::class)
         ->add('quantite', IntegerType::class)
-        ->add('categorie', TextType::class)
+        ->add('categorie', ChoiceType::class,array('choices'=> array(
+            'Laitier' => 'laitier',
+            'Légume' => 'legume',
+            'Viande' => 'viande',
+        )))
         ->add('prixHT', MoneyType::class)
-        ->add('image', FileType::class, array('data_class' => null,'required' => false));
-                   
+        ->add('image', FileType::class, array('data_class' => null,'required' => false));                   
     }
 
     public function configureOptions(OptionsResolver $resolver)
