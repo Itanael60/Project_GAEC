@@ -27,6 +27,24 @@ cgu:
   defaults:
     template: static/cgu.html.twig
 
+mention:
+  path: /mention
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: static/mention.html.twig
+
+contact:
+  path: /contact
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: static/contact.html.twig
+
+histoire:
+  path: /histoire
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+  defaults:
+    template: static/histoire.html.twig
+
 creationProduit:
   path: /admin_produit
   controller: App\Controller\ProduitController:creationProduit
@@ -54,10 +72,23 @@ panier:
 ajouter:
   path: /ajouter/{id}
   controller: App\Controller\PanierController:ajouter
+
+plusProduit:
+  path: /plusProduit/{id}
+  controller: App\Controller\PanierController:plusProduit
+
+moinsProduit:
+  path: /moinsProduit/{id}
+  controller: App\Controller\PanierController:moinsProduit
   
 supprimer:
   path: /supprimer/{id}
   controller: App\Controller\PanierController:supprimer
+
+supprimerPanier:
+  path: /clearPanier
+  controller : App\Controller\PanierController:supprimerPanier
+
 
 formRecherche:
   path: /formRecherche
@@ -67,6 +98,14 @@ recherche:
   path: /recherche
   controller : App\Controller\ProduitController:rechercheTraitement
 
+
+recupQte:
+  path: /recupQte
+  controller : App\Controller\ProduitController:recupQte
+
+ajoutQte:
+  path: /ajoutQte
+  controller : App\Controller\ProduitController:ajoutQte
 
 
   

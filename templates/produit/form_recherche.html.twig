@@ -6,5 +6,10 @@
 
 {% endblock %} #}
 
-{{form(form)}}
+
+<form action="{{path('recherche')}}" method="POST" class="">
+    {{form_widget(form.produit)}}
+    <input type="submit" id="rechercher" value="Rechercher" class="btn btn-primary">
+    {{form_widget(form)}}
+</form>
 

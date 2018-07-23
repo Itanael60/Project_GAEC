@@ -24,7 +24,7 @@
             <tr>
                 <td data-th="Produit">
                     <div class="row">
-                        <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+                        <div class="col-sm-2 hidden-xs"><img src="{{app.request.basepath}}/uploads/produits/{{produit.image}}" alt="{{produit.produit}}" class="img-responsive" height="100px" width="100px"/></div>
                         <div class="col-sm-10">
                             <h4 class="nomargin">{{produit.produit}}</h4>
                             <p>{{produit.detail}}</p>
@@ -33,11 +33,12 @@
                 </td>
                 <td data-th="Prix"> {{produit.prixHT}} €</td>
                 <td data-th="Quantite">
-                    <input type="number" class="form-control text-center" value="{{produit.qte}}">
+                    <input type="number" class="form-control text-center" id="qte" value="{{produit.qte}}" name="qte">
                 </td>
                 <td data-th="Sous-total" class="text-center">{% set sousTotal = 0 %}{% set sousTotal = produit.prixHT * produit.qte %} {{sousTotal}}</td>
                 <td class="actions" data-th="">
-                    <a href="{{path('panier')}}"><button class="btn btn-info btn-sm"><i class="fas fa-sync-alt"></i></button></a>
+                    <a href="{{path('moinsProduit', {'id':produit.id})}}"><button class="btn btn-info btn-sm" id='actualiser' ><i class="fas fa-minus"></i></button></a>
+                    <a href="{{path('plusProduit', {'id':produit.id})}}"><button class="btn btn-info btn-sm" id='actualiser' ><i class="fas fa-plus"></i></button></a>
                     <a href="{{path('supprimer', {'id':produit.id})}}"><button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></a>						
                 </td>
             </tr>
@@ -59,3 +60,5 @@
 </div>
 
 {% endblock %}
+
+

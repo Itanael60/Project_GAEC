@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html >
     <head>
@@ -14,30 +15,32 @@
         <div class="container">
             <div class="row">
                 <header class="align-items-center">
-                    <img src="{{asset("img/logo.png")}}" style="width: 10%;">
-                    <h4 class="col-sm-4">- La boutique en ligne -</h4>
-                        <nav class="col-sm-7">
-                            <ul>
-                                <li><a id="home" href="/">Accueil</a></li>
-                                <li><a id="historique" href="">Notre histoire</a></li>
-                                <li><a id="inscription" href="/inscription">S'inscrire</a></li>
-                                <li><a id="connexion" data-toggle="modal" data-target="#user_modal" href="">Se connecter</a></li>
-                                <li><a id="boutique" href="">Nos produits</a></li>
-                            </ul>
-                            {{ render(controller(
-                                'App\\Controller\\ProduitController::recherche'
-                            ))}}
-                            
-                        </nav>
+                    <img id="logo_accueil" src="{{asset("img/logo.png")}}" style="width: 10%;">
+                    <h4 class="col-4 nav_bar">- La boutique en ligne -</h4>
+                        <div class="col-7 nav_bar">
+                            <nav>
+                                <ul>
+                                    <li><a id="home" href="/">Accueil</a></li>
+                                    <li><a id="historique" href="/histoire">Notre histoire</a></li>
+                                    <li><a id="inscription" href="/inscription">S'inscrire</a></li>
+                                    <li><a id="connexion" data-toggle="modal" data-target="#user_modal" href="">Se connecter</a></li>
+                                    <li><a id="boutique" href="/produits">Nos produits</a></li>
+                                </ul>
+                            </nav>
+                        </div>
                 </header>
             </div>
         </div>
+        <div class="padding"></div> 
+        <div class="container">
         {% block body %}
         {% endblock %}
+        </div>
+        <div class="container">
         <div class="padding"></div>  
-        <footer class="container row" style="margin: 0 20%;">
+        <footer class="row">
             <div class="col-3 cellspading">
-                <h4><a href="">Nous contacter</a></h4>
+                <h4><a href="/contact">Nous contacter</a></h4>
                 <p class="contact">
                     GAEC Ferme de la vieille rue
                     <br>
@@ -59,17 +62,15 @@
                     Maison Leguay
                 </p>
             </div>
-            <div class="col-3 cellspading">
+            <div id="resize_label" class="col-3 cellspading">
                 <h4 id="label">Nos labels</h4>
-                <img src="{{asset("img/made_in_60.png")}}" style="width: 30%;">
-                <img src="{{asset("img/bienvenue_a_la_ferme.png")}}" style="width: 25%;">
+                <img class="img_label" src="{{asset("img/made_in_60.png")}}" style="width: 30%;">
+                <img class="img_label" src="{{asset("img/bienvenue_a_la_ferme.png")}}" style="width: 25%;">
             </div>
             <div class="col-3 cellspading">
-                <div class="row">
                     <h4>Nos réseaux sociaux</h4>
-                </div>
                 <div class="row">
-                    <p>
+                    <p id="facebook">
                         <a href="https://www.facebook.com/producteurlaitier.GAECDELAVIEILLERUE60/?ref=br_rs">
                             <i class="fab fa-facebook-f"></i>
                         </a>
@@ -77,7 +78,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <a class="contact2" href="">Mentions Légales</a>
+                <a class="contact2" href="/mention">Mentions Légales</a>
             </div>
             <div class="col-6" style="text-align: center;">
                 <p class="contact">2018 &copy; La ferme de la vieille rue</p>
@@ -86,15 +87,22 @@
                 <a class="contact2" href="/cgu">CGU</a>
             </div>
         </footer>
+        </div>
         <div class="padding"></div>  
         
         {% block javascripts %} 
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-            
 
-
+            <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.0';
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
             <script>(function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) return;

@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Form\RechercheType;
+use App\Form\AjoutQteType;
 use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,21 +75,17 @@ class ProduitController extends Controller
     *  @Route("/produit/{id}", name="produit", requirements={"id"="\d+"})
     */
 
-    public function showProduit($id)
+    public function showProduit($id, Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $produit= $entityManager->getRepository(Produit::class)->find($id);
 
+        
         if(!$produit)
         {
             throw $this->createNotFoundException('Aucun produit ne correspond');
         }
-
-              
-
         return $this->render ('produit/produit.html.twig', ['produit'=>$produit]);
-
-
     }
 
     // récupérer des éléments(id, titre, contenu, created) dans le stockage des class, ici Article
@@ -97,9 +94,6 @@ class ProduitController extends Controller
         $entityManager = $this->getDoctrine()->getRepository(Produit::class);
         // on récupère tous les éléments via findAll dans un tableau nommé 'articles'
         $produits = $entityManager->findAll();
-
-        
- 
         //renvoi les éléments récupérés pour les afficher dans la page articles.html.twig
         return $this->render ('produit/produits.html.twig', ['produits'=>$produits]);
      }
@@ -116,7 +110,6 @@ class ProduitController extends Controller
         return $this->render ('produit/admin_produitsListe.html.twig', ['produits'=>$produits]);
 
      }
-
     
      
      public function modifProduit(Request $request, Produit $produit)
@@ -136,16 +129,12 @@ class ProduitController extends Controller
                     $fileName
                 );
                 $produit->setImage($fileName);
-
             }
-            else {
-                
+            else {                
                 $produit->setImage('6bca0f32d445f16e2a3e7730035a1e12.jpeg');
             }
             
-
-            $em->flush();
-            
+            $em->flush();            
         }
 
         return $this->render('produit/admin_modifProduit.html.twig', [
@@ -154,95 +143,115 @@ class ProduitController extends Controller
         ]);
      }
 
-     public function panier()
-     {
-         return $this->render('panier/panier.html.twig');
-     }
- 
-     public function ajouter($id)
-     {
-        return $this->redirect($this->generateUrl('panier'));
-     }
- 
-     public function supprimer($id)
-     {
-        return $this->redirect($this->generateUrl('ajouter'));
-     }
 
-    // public function recherche():Response
-    // {
-    //     $form = $this->createForm(RechercheType::class);
-    //     return $this->render('produit/recherche.html.twig', [
-    //         'produit' => $produit,
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
-
-
-    // public function rechercheTraitement(Request $request)
-    // // public function rechercheTraitement();
-    // {
-    //     $form = $this->createForm(RechercheType::class);        
-    //     $form->handleRequest($request);
-    //     $entityManager = $this->getDoctrine()->getRepository(Produit::class);
-    //     $produits = $entityManager->findBy($produit);
-
-    //     return $this->render('produit/recherche.html.twig', [
-    //                 'produit' => $produit,
-    //                 'form' => $form->createView(),
-    //             ]);
-
-    
-    // // $entityManager = $this->getDoctrine()->getManager();
-    // // $produit= $entityManager->getRepository(Produit::class)->find($id);
-
-    // // if(!$produit)
-    // // {
-    // //     throw $this->createNotFoundException('Aucun produit ne correspond');
-    // // }
-
-          
-
-    // // return $this->render ('produit/produit.html.twig', ['produit'=>$produit]);
-
-    
-    // }
 
     public function recherche(Request $request)
     {
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
-        
-        if ($form->isSubmitted()) {
-            $produit=$request->query->get('recherche');
-            var_dump($produit);
-            die();
-            return $this->render('produit/recherche.html.twig', ['produit'=>$produit]);
-        }
+
+        // if ($form->isSubmitted() && $form->isValid()){
+            
+        //     $entityManager=$this->getDoctrine()->getManager();        
+        //     $produits = $entityManager->getRepository(Produit::class)->findBy(['produit'=>$recherche]);
+        //     var_dump($produits);
+        //     die();
+
+        //     return $this->render('produit/recherche.html.twig', ['produits'=>$produits]);
+        // }
         return $this->render('produit/form_recherche.html.twig',[
             'form' => $form->createview()]);
-       
     }
 
 
-    public function rechercheTraitement(Produit $produit)
+    public function rechercheTraitement(Request $request)
     {   
-        var_dump($produit);
-        die();
-        // $form = $this->createForm(RechercheType::class);
-
-        $entityManager=$this->getDoctrine()->getManager();
+        $form = $this->createForm(RechercheType::class);
+        if($request->getMethod()== 'POST'){
+            
+            $form->handleRequest($request);
+            // echo $form['produit']->getData();
+            $entityManager=$this->getDoctrine()->getManager();        
+            $produits = $entityManager->getRepository(Produit::class)->recherche($form['produit']->getData());
+            return $this->render('produit/produits.html.twig', ['produits'=>$produits]);
+        }
         
-        $produits = $entityManager->getRepository(Produit::class)->findBy(['produit'=>$produit]);
         
+        // var_dump($produits);
+        // die();
 
         // echo $produits->getProduit();
         // die();
 
-        return $this->render('produit/recherche.html.twig', ['produits'=>$produits]);
-        
+        // return $this->render('produit/produits.html.twig', ['produits'=>$produits]);
+        return $this->redirectToRoute('produits');
        
        
     }
+
+    public function recupQte(Request $request)
+     {
+        $form = $this->createForm(ajoutQteType::class);
+        $form->handleRequest($request);
+
+        return $this->render('produit/form_ajoutQte.html.twig',[
+            'form' => $form->createview()]);
+     }
+
+     public function ajoutQte(Request $request, $id)
+     {
+        $form = $this->createForm(ajoutQteType::class);
+        if($request->getMethod()== 'POST'){
+            
+            $form->handleRequest($request);
+            // echo $form['qte']->getData();
+            $qte = $form['qte']->getData();
+
+            // dump($qte);
+            // die();
+
+            $session = $request->getSession();
+            if (empty($session->get('panier')))
+                $panier = array();
+            else
+                $panier = $session->get('panier');
+            
+            $panier = (is_array($panier))?$panier:array();
+            
+            if (array_key_exists($id, $panier)) {
+                $panier[$id]["qte"] += $qte;
+                $session->set('panier', json_encode($panier));
+                
+            } 
+            else 
+            {
+                // Recuperation du produit
+                $em = $this->getDoctrine()->getManager();
+                $produit = $em->getRepository(Produit::class)->findOneBy(array("id" => $id));
+                $panier[$id] = array("id" => $id, "qte" => 1, "produit" => $produit->getProduit(), "detail" => $produit->getDetail(), "prixHT" => $produit->getPrixHT(),"image" => $produit-> getImage());
+                
+                $session->set('panier', json_encode($panier));
+            }
+            // var_dump($panier[$id]);
+            // die();
+            $session->set('panier',$panier);
+                    
+            return $this->redirect($this->generateUrl('panier'));
+                
+                return $this->render('panier/panier.html.twig', ['qte' => $qte]);
+            }
+            
+        
+        // var_dump($produits);
+        // die();
+
+        // echo $produits->getProduit();
+        // die();
+
+        // return $this->render('produit/produits.html.twig', ['produits'=>$produits]);
+        return $this->redirectToRoute('produits');
+     }
+
+
 
 }

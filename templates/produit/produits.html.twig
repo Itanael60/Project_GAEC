@@ -3,30 +3,59 @@
 {% block title %}Hello !{% endblock %}
 
 {% block body %}
-
+{{ render(controller('App\\Controller\\ProduitController::recherche')) }}
 
 <div class="container">
-<form class="navbar-form form-search pull-right">
     
     <div class="card-deck">
-    {% if produits is empty %}
-        <div>
-           <p>Il n'y a aucun produit pour le moment</p>
+            <div class="row">        
+            {% if produits is empty %}
+                <div>
+                <p>Il n'y a aucun produit pour le moment</p>
+                </div>
+            {% else %}
+                {% for produit in produits %}
+                <div class="col-sm-4">
+                    <div class="card mt-4">
+                        <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produit.image}}" alt="{{produit.produit}}" height="503px" width="200px">
+                        <div class="card-body">
+                            <a href="{{path('produit', {'id':produit.id})}}"> <h3 class="card-title">{{ produit.produit }}</h3></a><h4>{% set prix = produit.prixHT * 1.19 %}</h4>
+                            <p class="card-text"> {{ produit.detail }}</p>
+                            <a href="{{path('ajouter', {'id':produit.id})}}" class="btn btn-warning">Mettre au panier</a>            
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}            
+            {% endif %}
         </div>
-    {% else %}
-        {% for produit in produits %}
-            <div class="card mt-4">
-                <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produit.image}}" alt="{{produit.produit}}" height="503px" width="200px">
-                <div class="card-body">
-        <a href="{{path('produit', {'id':produit.id})}}"> <h3 class="card-title">{{ produit.produit }}</h3></a><h4>{% set prix = produit.prixHT * 1.19 %}</h4>
-                <p class="card-text"> {{ produit.detail }}</p>
-                
-            <a href="{{path('ajouter', {'id':produit.id})}}" class="btn btn-warning">Mettre au panier</a>            
-            </div>
-        </div>
-        {% endfor %}
-        </div>
-    {% endif %}
+    </div>
     
 </div>
 {% endblock %}
+{# {% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+            
+    <script>
+    $(document).ready(function () {       
+        $('form').on('submit', function(event) {
+            event.preventDefault();
+            var produits = $("#produits").val();
+            $.ajax({
+                type: "get",
+                url: "http://127.0.0.1:8000/recherche/"+ $("#produits").val(),
+                beforeSend: function(){
+                    console.log('ca charge');
+                },
+                success: function(){
+                    console.log('ok ok');
+                }
+                
+                
+            });
+        });
+    });
+    </script>
+{% endblock %} #}
+

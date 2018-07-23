@@ -21,7 +21,7 @@
                 </div>
             </div>
         {% endfor %}
-    {% else %}
+    {% elseif produits|length == 1 %}
         <div class="card mt-4">
                 <img class="card-img-top"  src="{{app.request.basepath}}/uploads/produits/{{produits.image}}" alt="{{produits.produit}}" height="503px" width="200px">
                 <div class="card-body">
@@ -31,9 +31,13 @@
                     <a href="{{path('ajouter', {'id':produits.id})}}" class="btn btn-warning">Mettre au panier</a>            
                 </div>
             </div>
+    {% else %}
+
     {% endif %}
     </div>
 
     
 </div>
 {% endblock %}
+
+

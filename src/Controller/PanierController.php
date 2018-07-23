@@ -45,7 +45,7 @@ class PanierController extends Controller
             // Recuperation du produit
             $em = $this->getDoctrine()->getManager();
             $produit = $em->getRepository(Produit::class)->findOneBy(array("id" => $id));
-            $panier[$id] = array("id" => $id, "qte" => 1, "produit" => $produit->getProduit(), "detail" => $produit->getDetail(), "prixHT" => $produit->getPrixHT());
+            $panier[$id] = array("id" => $id, "qte" => 1, "produit" => $produit->getProduit(), "detail" => $produit->getDetail(), "prixHT" => $produit->getPrixHT(),"image" => $produit-> getImage());
             
             $session->set('panier', json_encode($panier));
             $this->get('session')->getFlashBag()->add('success','Article ajouté avec succès');
@@ -57,24 +57,95 @@ class PanierController extends Controller
         return $this->redirect($this->generateUrl('panier'));
      }
  
-     public function supprimer(Request $request, $id)
-     {
+    public function supprimer(Request $request, $id)
+    {
         $session = $request->getSession();
         $panier = $session->get('panier');
         
-    //    var_dump($panier[$id]);
-    //    die();
+        //    var_dump($panier[$id]);
+        //    die();
 
-    if (array_key_exists($id, $panier)) {
-        unset($panier[$id]);
-        $this->get('session')->getFlashBag()->add('success','Quantité modifié avec succès');
-        // var_dump($panier);
-        // die();
-        $panier=$session->set('panier', $panier);
-    } 
+        if (array_key_exists($id, $panier)) {
+            unset($panier[$id]);
+            $this->get('session')->getFlashBag()->add('success','Quantité modifié avec succès');
+            // var_dump($panier);
+            // die();
+            $panier=$session->set('panier', $panier);
+        } 
+            
+        return $this->redirect($this->generateUrl('panier'));
+            
+    }
+
+    public function supprimerPanier(Request $request)
+    {
+        $session = $request->getSession();
+        $panier = $session->get('panier');
         
-    return $this->redirect($this->generateUrl('panier'));
-        // return $this->redirectToRoute('panier');
-    //  return $this->redirect($this->generateUrl('ajouter'));
+        $session->remove('panier');
+        return $this->redirect($this->generateUrl('panier'));
+            
+    }
+
+
+    public function plusProduit(Request $request, $id)
+    {
+        
+        $session = $request->getSession();
+        $panier = $session->get('panier');
+        $panier[$id]["qte"]++;
+        $panier=$session->set('panier', $panier);
+        // var_dump($panier[$id]);
+        // die();    
+                
+        return $this->redirect($this->generateUrl('panier'));
+    }
+    public function moinsProduit(Request $request, $id)
+    {
+        
+        $session = $request->getSession();
+        $panier = $session->get('panier');
+        $panier[$id]["qte"]--;
+        $panier=$session->set('panier', $panier);
+        // var_dump($panier[$id]);
+        // die();    
+                
+        return $this->redirect($this->generateUrl('panier'));
+    }
+
+    public function ajouterQte($id, Request $request)
+     {
+        dump($request);
+        die();
+        $form->handleRequest($request);
+
+        $session = $request->getSession();
+        if (empty($session->get('panier')))
+            $panier = array();
+        else
+            $panier = $session->get('panier');
+        
+        $panier = (is_array($panier))?$panier:array();
+        
+        if (array_key_exists($id, $panier)) {
+            $panier[$id]["qte"] += $qte;
+            $session->set('panier', json_encode($panier));
+            
+        } 
+        else 
+        {
+            // Recuperation du produit
+            $em = $this->getDoctrine()->getManager();
+            $produit = $em->getRepository(Produit::class)->findOneBy(array("id" => $id));
+            $panier[$id] = array("id" => $id, "qte" => 1, "produit" => $produit->getProduit(), "detail" => $produit->getDetail(), "prixHT" => $produit->getPrixHT(),"image" => $produit-> getImage());
+            
+            $session->set('panier', json_encode($panier));
+        }
+        // var_dump($panier[$id]);
+        // die();
+        $session->set('panier',$panier);
+                
+        return $this->redirect($this->generateUrl('panier'));
      }
+
 }

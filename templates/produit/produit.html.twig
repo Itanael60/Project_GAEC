@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
 <div class="container">
 
     <div class="card mt-4">
@@ -12,12 +13,17 @@
             <h3 class="card-title">{{ produit.produit }}</h3>
             <h4>{% set prix = produit.prixHT * 1.19 %}</h4>
             <p class="card-text"> {{ produit.detail }}</p>
-            <select name="qte">
-                {% for i in 1..10 %}
-                    <option value="{{ i }}">{{ i }} </option>
-                {% endfor %}
-            </select>
-            <a class="btn btn-warning">Mettre au panier</a>
+            {{ render(controller('App\\Controller\\ProduitController::recupQte')) }}
+            {# <form method="POST">
+                <select name="qte">
+                    {% for i in 1..10 %}
+                        <option value="{{ i }}">{{ i }} </option>
+                    {% endfor %}
+                </select>
+                {# <a href="{{path('ajouterQte', {'id':produit.id})}} "class="btn btn-warning"> #}
+                 {# <input type="submit" value=" Mettre au panier"> #}
+                {# </a> #}
+            {# </form>  #}
             
         </div>
     </div>

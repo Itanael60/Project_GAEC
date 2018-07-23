@@ -14,13 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RechercheType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $option)
-    {
+    {        
         $builder
-        ->add('recherche', TextType::class,['attr' => [
-            'name' => 'recherche'
-        ]])
-        ->add('rechercher', SubmitType::class, ['attr' => [
-            'class' => 'btn btn-primary'
+        ->add('produit', TextType::class,['attr' => [
+            'class' => 'input-medium search-query',
+           
         ]]);
     }
 

@@ -19,6 +19,29 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function byCategorie($categorie)
+    {
+        $qb= $this-> createQueryBuilder('u')
+            ->select('u')
+            ->where('u.categorie = :categorie')
+            ->orderBy('u.id')
+            ->setParameter('categoerie', $categorie);
+        
+        return $qb->getQuery()->getResult();
+    }
+
+
+    public function recherche($chaine)
+    {
+        $qb= $this-> createQueryBuilder('u')
+            ->select('u')
+            ->where('u.produit like :chaine')
+            ->orderBy('u.id')
+            ->setParameter('chaine', '%'.$chaine.'%');
+        
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Produit[] Returns an array of Produit objects
 //     */
